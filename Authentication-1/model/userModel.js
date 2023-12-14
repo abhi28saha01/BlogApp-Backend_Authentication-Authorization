@@ -13,7 +13,17 @@ const userSchema = new mongoose.Schema({
     },
     token : {
         type : String,
+        default : undefined
     },
+    posts : [{
+        type : String
+    }],
+    likes : [{
+        type : String
+    }],
+    comments : [{
+        type : String
+    }],
     password : {
         type : String,
         required : true,

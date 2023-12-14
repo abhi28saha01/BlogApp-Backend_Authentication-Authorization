@@ -48,7 +48,7 @@ exports.logIn = async(req,res) => {
                 httpOnly : true
             }
             //Create Cookie and attach Token into the Cookie
-            return res.cookie('Token',token,options).status(200).json({
+            return res.cookie('token',token,options).status(200).json({
                 success : true,
                 user,
                 message : 'You are Successfully Logged In'

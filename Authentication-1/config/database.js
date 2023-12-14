@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-
 require('dotenv').config();
 
 exports.connect = () => {
@@ -7,9 +6,10 @@ exports.connect = () => {
         useNewUrlParser : true,
         useUnifiedTopology : true
     })
-    .then(() => {console.log('Database Conection is Successful');})
+    .then(() => {console.log('Database Connection is successful');})
     .catch((err) => {
-        console.log(err);
-        console,log('Database Conection is Not Successful');
+        console.error(err);
+        console.log('Database Connection is Nort Successful');
+        process.exit(1);
     })
 };
