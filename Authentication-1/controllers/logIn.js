@@ -38,13 +38,13 @@ exports.logIn = async(req,res) => {
             }
             //create Token
             const token = jwt.sign(payload,process.env.JWT_SECRET,{
-                expiresIn : '2h'
+                expiresIn : '1h'
             })
             user.token = token;
             user.password = undefined;
 
             const options = {
-                expires : new Date(Date.now() + 2 * 60 * 60 * 1000),
+                expires : new Date(Date.now() + 1 * 60 * 60 * 1000),
                 httpOnly : true
             }
             //Create Cookie and attach Token into the Cookie

@@ -21,7 +21,7 @@ router.delete('/remove/comment',auth,deleteComment);
 router.put('/edit/post/:id',auth,editPost);
 router.put('/edit/comment',auth,editComment);
 
-router.get('/get/posts',fetchAllPost);
+router.get('/get/posts',auth,fetchAllPost);
 
 router.post('/login',logIn);
 router.post('/registration',registration);

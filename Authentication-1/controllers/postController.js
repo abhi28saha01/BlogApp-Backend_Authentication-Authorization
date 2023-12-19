@@ -75,6 +75,16 @@ exports.deletePost = async(req,res) => {
         const {id} = req.params;
         const {username} = req.user;
         
+        const searchUser = await User.findOne({username : username})
+        const posts = searchUser.posts; 
+
+        if(!isPostExist(posts,id)){
+            return res.status(400).json({
+                success : false,
+                message : 'You do not have Permission for Delete This Post'
+            })
+        }
+
         //Find Post by Id and Delete
         await Post.findByIdAndDelete(id);
         await User.findOneAndUpdate({username : username},{$pull : {posts : id}},{new : true});

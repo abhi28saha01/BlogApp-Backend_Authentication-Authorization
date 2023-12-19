@@ -2,43 +2,54 @@ const Post = require('../model/postModel');
 const Like = require('../model/likeModel');
 const User = require('../model/userModel');
 
-exports.createLike = async (req,res) => {
-    try{
-        //Fetch Data
-        const {post} = req.body;
-        const {username} = req.user;
+exports.createLike = async (req, res) => {
+    try {
+        // Fetch Data
+        const { postId } = req.body; // Extract 'body' from req.body
+        const { username } = req.user;
 
-        const findPost = await Post.findById(post);
-        if(!findPost){
+        console.log(postId);
+
+        const findPost = await Post.findById(postId);
+        if (!findPost) {
             return res.status(400).json({
-                success : false,
-                message : 'Post is Not Created',
-            })
+                success: false,
+                message: 'Post is Not Created',
+            });
         }
 
-        //DB Call : Create Method
-        const newLike = await Like.create({post,user : username,body});
-        const updateUser = await User.findOneAndUpdate({username : username},{$push : {likes : newLike._id}},{new : true})
-                                    .populate('like').exec();
-        //Add Comment ID in the Post
-        const updatedPost = await Post.findByIdAndUpdate(post,{$push : {likes : newLike._id}} , {new : true})
-                                                .populate('likes').exec();
+        // DB Call: Create Method
+        const newLike = await Like.create({ postId, user: username});
+        const updateUser = await User.findOneAndUpdate(
+            { username: username },
+            { $push: { likes: newLike._id } },
+            { new: true }
+        )
 
-        //Send Success Response
+        // Add Comment ID in the Post
+        const updatedPost = await Post.findByIdAndUpdate(
+            postId,
+            { $push: { likes: newLike._id } },
+            { new: true }
+        )
+            .populate('likes')
+            .exec();
+
+        // Send Success Response
         res.status(200).json({
-            success : true,
-            message : 'Like Successfully Added in the Post',
-            data : updatedPost,
-        })
-    }
-    catch(err){
+            success: true,
+            message: 'Like Successfully Added in the Post',
+            data: updatedPost,
+        });
+    } catch (err) {
         console.log(err);
         res.status(500).json({
-            success : false,
-            message : 'Something Went wrong while Creating Like',
-        })
+            success: false,
+            message: 'Something Went wrong while Creating Like',
+        });
     }
 };
+
 
 function isLikeExist(likes,likeId){
     return likes.includes(likeId);
