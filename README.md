@@ -18,3 +18,7 @@ This repository contains the backend API for a Blog Application built <b> using 
   <li><b>JWT:</b> For authentication and authorization.</li>
   <li><b>Mongoose:</b> ODM for MongoDB.</li>
 </ul>
+
+<h3>Full API Documentation : </h3> https://documenter.getpostman.com/view/26976391/2sAXxLAtEc
+<br>
+<h3>If You Like this then don't Forget to hit the Star Button. Thank You..!!</h3>
